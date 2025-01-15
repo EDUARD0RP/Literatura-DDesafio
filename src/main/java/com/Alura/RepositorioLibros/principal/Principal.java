@@ -30,19 +30,19 @@ public class Principal {
     public void mostrarMenu(){
 
         var opcionUsuario = -1;
-        System.out.println("\n------------------------------------------");
-        System.out.println("Bienvenido a nuestro repostorio de libros desafio");
-        System.out.println("-------------------------------------------------");
+        System.out.println("\n*********** *********** *********** ");
+        System.out.println("      Challenge de Literatura       ");
+        System.out.println("*********** *********** *********** ");
         while(opcionUsuario != 0){
 
             System.out.println("\nElija la opcion deseada: ");
             System.out.println("""
-                                1) Buscar un libro por titulo
-                                2) Listar libros registrados
-                                3) Listar autores registrados
-                                4) Listar autores vivos en un determiando año
-                                5) Listar libros por idioma
-                                6) Borrar libro de la lista
+                                1.- Buscar un libro por titulo
+                                2.-  Listar libros registrados
+                                3.-  Listar autores registrados
+                                4.-  Listar autores vivos en un determiando año
+                                5.-  Listar libros por idioma
+                                6.-  Borrar libro de la lista
                     
                                 7) Salir
                                 """);
@@ -118,12 +118,10 @@ public class Principal {
 
             DatosLibro datosLibro = libroEncontrado.get();
 
-            //Esta lista de autores, es de mi json
             List<Autores> autores = libroEncontrado.get().autores().stream()
                     .map(Autores::new)
                     .collect(Collectors.toList());
 
-            //Creacion de los autores de los libros solicitados
             for (int i = 0; i < autores.size(); i++) {
                 nombreDelAutor = autores.get(i).getNombre();
                 Autores autorEncontrado = autoresRepository.findByNombre(nombreDelAutor);
@@ -136,7 +134,6 @@ public class Principal {
             Libro libroCreado = new Libro(datosLibro);
             List<Autores> autoresAGuardar = new ArrayList<>();
 
-            //Asigancion de autores del libro buscado
             for (int i = 0; i < autores.size() ; i++) {
                 nombreDelAutor = autores.get(i).getNombre();
                 Autores autorEncontrado = autoresRepository.findByNombre(nombreDelAutor);
@@ -149,35 +146,35 @@ public class Principal {
                 libroRepository.save(libroCreado);
             }
 
-            System.out.println("\n----------Libro---------");
+            System.out.println("\n*********** Libro *********** ");
             System.out.println("Titulo: " + libroCreado.getTitulo());
             System.out.println("Autor: " + libroCreado.getAutores());
             System.out.println("Idiomas: " + libroCreado.getIdiomas());
             System.out.println("Numero de descargas: " + libroCreado.getNumeroDeDescargas());
-            System.out.println("--------------------------");
+            System.out.println("*********** ***********");
 
 
         } else {
-            System.out.println("Libro no encontardo, intentelo de nuevo :( ");
+            System.out.println("** Libro no Encontrado ** ");
         }
     }
 
     private void listarTodosLosLibros() {
 
         List<Libro> librosEnLaBase = libroRepository.findAll();
-        System.out.println("\n----------Libros registrados---------");
+        System.out.println("\n*********** Libros en Base de Datos ***********");
         mostraLibrosPorConsulta(librosEnLaBase);
     }
 
     private void listarAutoresRegistrados() {
         List<Autores> autoresEnLaBase = autoresRepository.autoresRegistrados();
-        System.out.println("\n----------Autores registrados---------");
+        System.out.println("\n*********** Autores registrados *********** ");
         for (Autores autores : autoresEnLaBase) {
             System.out.println("Autor: " + autores.getNombre());
             System.out.println("Fecha de nacimiento: " + autores.getFechaDeNacimiento());
             System.out.println("Fecha de fallecimiento: " + autores.getFechaDeFallecimiento());
             System.out.println("Libros: " + autores.getLibro() + "\n");
-            System.out.println("-----------------------------------------");
+            System.out.println("*********** *********** *********** ");
 
         }
 
@@ -189,25 +186,25 @@ public class Principal {
         List<Autores> autoresVivos = autoresRepository.autoresPorFecha(fechaIngresado);
 
         for (Autores autoresVivo : autoresVivos) {
-            System.out.println("\n-------------Autores------------");
+            System.out.println("\n*********** Autores ***********");
             System.out.println("Autor: " + autoresVivo.getNombre());
             System.out.println("Fecha de nacimiento: " + autoresVivo.getFechaDeNacimiento());
             System.out.println("Fecha de fallecimiento: " + autoresVivo.getFechaDeFallecimiento());
-            System.out.println("------------------------------------");
+            System.out.println("*********** *********** *********** ");
         }
     }
 
     private void listarLibroPorIdioma() {
         System.out.println("""
-                Ingrese la opcion del idioma en el cual quiere buscar los libros:
-                es - Español
-                en - Ingles
-                fr - Frances
+                Ingrese el Idioma a Buscar:
+                Español -> es
+                Ingles -> en
+                Frances  -> fr
                 """);
         var idioma = teclado.nextLine();
         List<Libro> librosIdioma = libroRepository.librosPorIdioma(idioma);
 
-        System.out.printf("\n----------Libros registrados con el idioma '%s'---------\n",idioma);
+        System.out.printf("\n*********** Libros registrados con el idioma '%s'***********\n",idioma);
         mostraLibrosPorConsulta(librosIdioma);
     }
 
@@ -218,14 +215,14 @@ public class Principal {
             System.out.println("Autores: " + libro.getAutores());
             System.out.println("Idiomas: " + libro.getIdiomas());
             System.out.println("Numero de descargas: " + libro.getNumeroDeDescargas() + "\n");
-            System.out.println("-----------------------------------------");
+            System.out.println("*********** *********** ***********");
         }
 
     }
 
     private void borrarLibro() {
         listarTodosLosLibros();
-        System.out.println("Ingrese el titulo: ");
+        System.out.println("Ingrese el Titulo: ");
         var titulo = teclado.nextLine();
         libroRepository.deleteByTitulo(titulo);
     }
