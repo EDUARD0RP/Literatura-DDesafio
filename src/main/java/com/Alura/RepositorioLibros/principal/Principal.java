@@ -31,8 +31,8 @@ public class Principal {
 
         var opcionUsuario = -1;
         System.out.println("\n------------------------------------------");
-        System.out.println("Bienvenido a nuestro repostorio de libros");
-        System.out.println("------------------------------------------");
+        System.out.println("Bienvenido a nuestro repostorio de libros desafio");
+        System.out.println("-------------------------------------------------");
         while(opcionUsuario != 0){
 
             System.out.println("\nElija la opcion deseada: ");
